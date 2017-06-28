@@ -24,14 +24,31 @@
  
 
 ```$xslt
+    @Override
+    @TxTransaction
+    public int save() {
 
+        int rs2 = demo2Client.save();//远程调用方
+        
+        int rs1 = testDao.save();
+
+
+        return rs1+rs2;
+    }
 
 ```
 
 ### SpringCloud服务者提供方
 
 ```$xslt
+    @Override
+    @Transactional
+    public int save() {
 
+        int rs = testDao.save();
+
+        return rs;
+    }
 
 ```
 
@@ -65,7 +82,7 @@ maven transaction 配置
 ##### 分布式事务注解(@TxTransaction)
 ```$xslt
     @Override
-    @TxTransaction
+    @TxTransaction    
     public String test() {
 
         //todo 业务处理
@@ -81,6 +98,10 @@ maven transaction 配置
 
 ### 演示demo：  
 
-### 待续......
+spring-jdbc版本：
+[springcloud-jdbc-demo1](https://github.com/1991wangliang/springcloud-jdbc-demo1) [springcloud-jdbc-demo2](https://github.com/1991wangliang/springcloud-jdbc-demo2)   
+springcloud-jdbc-demo1是发起方，springcloud-jdbc-demo2是被调用方。
+
+
 
 QQ交流群：554855843
