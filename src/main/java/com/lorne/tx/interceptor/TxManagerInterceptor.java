@@ -1,18 +1,13 @@
 package com.lorne.tx.interceptor;
 
-import com.lorne.tx.Constants;
 import com.lorne.tx.annotation.TxTransaction;
 import com.lorne.tx.bean.TransactionLocal;
 import com.lorne.tx.bean.TxTransactionInfo;
 import com.lorne.tx.bean.TxTransactionLocal;
 import com.lorne.tx.service.TransactionServer;
 import com.lorne.tx.service.TransactionServerFactoryService;
-
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
@@ -25,7 +20,7 @@ import java.lang.reflect.Method;
 /**
  * Created by lorne on 2017/6/7.
  */
-@Aspect
+
 @Component
 public class TxManagerInterceptor {
 
@@ -34,7 +29,6 @@ public class TxManagerInterceptor {
     private TransactionServerFactoryService transactionServerFactoryService;
 
 
-    @Around("@annotation(com.lorne.tx.annotation.TxTransaction)")
     public Object around(ProceedingJoinPoint point) throws Throwable {
 
         MethodSignature signature = (MethodSignature) point.getSignature();
@@ -61,6 +55,5 @@ public class TxManagerInterceptor {
         TransactionServer server =  transactionServerFactoryService.createTransactionServer(state);
 
         return server.execute(point,state);
-
     }
 }
